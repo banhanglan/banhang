@@ -1,29 +1,23 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-   <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Ngọc Lan">
-    <meta name="theme-color" content="#2563eb">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%232563eb'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='900' font-style='italic' font-size='80' fill='white'>NL</text><text x='50%25' y='80%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='700' font-size='18' fill='rgba(255,255,255,0.8)'>NGOC LAN</text></svg>">
-    <title>Ngọc Lan - Bình Thuận</title>
+    <title> NGỌC LAN - BÌNH THUẬN </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
-        :root { --primary-blue: #2563eb; --dark-blue: #1e40af; --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); }
-        body { font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg-gradient); user-select: none; -webkit-tap-highlight-color: transparent; color: #1f2937; margin: 0; }
-        .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(186, 230, 253, 0.5); box-shadow: 0 8px 20px -5px rgba(37, 99, 235, 0.1); }
-        .safe-top { padding-top: env(safe-area-inset-top); }
-        .btn-blue { background: linear-gradient(to right, #3b82f6, #2563eb); transition: all 0.2s ease; }
-        .btn-blue:active { transform: scale(0.96); filter: brightness(1.1); }
+        body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif; background: #f0f9ff; overscroll-behavior-y: contain; }
+        .glass-card { background: white; border-radius: 24px; box-shadow: 0 4px 20px rgba(14, 165, 233, 0.08); border: 1px solid rgba(224, 242, 254, 0.6); }
+        .active-tab { color: #0284c7; font-weight: 800; position: relative; }
+        .active-tab::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: #0284c7; border-radius: 50%; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .animate-up { animation: slideUp 0.4s ease-out forwards; }
+        .btn-press:active { transform: scale(0.96); }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-up { animation: slideUp 0.3s ease-out forwards; }
     </style>
 </head>
 <body>
@@ -31,19 +25,13 @@
     <script type="text/babel">
         const { useState, useEffect, useMemo, useRef } = React;
 
-        // Custom App Icon Component for UI
-        const AppLogoIcon = () => (
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-blue-200">
-                <span className="text-white font-black text-sm italic tracking-tighter">NL</span>
-            </div>
-        );
-
-        // UI Icons
+        // Icons
         const HomeIcon = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>;
         const ChartIcon = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>;
         const SyncIcon = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>;
         const TrashIcon = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>;
         const PlusIcon = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>;
+        const EyeIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>;
 
         function App() {
             const [view, setView] = useState('pos');
@@ -57,6 +45,7 @@
             const [inputNote, setInputNote] = useState('');
             const [showBill, setShowBill] = useState(false);
             const [billImg, setBillImg] = useState(null);
+            const [previewData, setPreviewData] = useState(null); 
             const receiptRef = useRef(null);
 
             const [showAddCust, setShowAddCust] = useState(false);
@@ -152,6 +141,7 @@
                 };
                 try {
                     await fetch(sheetUrl, { method: 'POST', mode: 'no-cors', body: JSON.stringify(orderData) });
+                    setPreviewData(null); 
                     setShowBill(true); 
                     setTimeout(async () => {
                         const canvas = await html2canvas(receiptRef.current, { scale: 2, useCORS: true });
@@ -164,23 +154,54 @@
                 }
             };
 
+            const handleViewHistory = (sale) => {
+                setLoading(true);
+                const items = sale.details.split(', ').map((str, idx) => {
+                    const nameMatch = str.match(/^(.*?) \(x(\d+)\)/);
+                    const noteMatch = str.match(/\[(.*?)\]/);
+                    return {
+                        id: idx,
+                        name: nameMatch ? nameMatch[1] : str,
+                        qty: nameMatch ? nameMatch[2] : 1,
+                        appliedPrice: 0, 
+                        note: noteMatch ? noteMatch[1] : ''
+                    };
+                });
+
+                setPreviewData({
+                    customer: sale.customer,
+                    note: '',
+                    date: new Date(sale.date).toLocaleString('vi-VN'),
+                    total: sale.total,
+                    items: items,
+                    isHistory: true
+                });
+
+                setShowBill(true);
+                setTimeout(async () => {
+                    const canvas = await html2canvas(receiptRef.current, { scale: 2, useCORS: true });
+                    setBillImg(canvas.toDataURL('image/png'));
+                    setLoading(false);
+                }, 800);
+            };
+
             const closeBill = () => {
                 setShowBill(false);
                 setBillImg(null);
-                setCart([]);
-                setCustomer('Khách lẻ');
-                setOrderNote('');
-                fetchData();
+                if (!previewData) {
+                    setCart([]);
+                    setCustomer('Khách lẻ');
+                    setOrderNote('');
+                    fetchData();
+                }
+                setPreviewData(null);
             };
 
             return (
                 <div className="flex flex-col h-screen max-w-md mx-auto relative bg-slate-50 overflow-hidden text-slate-900">
                     
                     <header className="px-6 py-4 flex justify-between items-center bg-white shadow-sm z-20">
-                        <div className="flex items-center gap-2">
-                            <AppLogoIcon />
-                            <h1 className="text-xl font-black text-blue-600 italic tracking-tighter">NGỌC LAN POS</h1>
-                        </div>
+                        <h1 className="text-xl font-black text-blue-600 italic tracking-tighter uppercase">NGỌC LAN</h1>
                         <button onClick={fetchData} className={`p-2 rounded-full ${loading ? 'animate-spin text-blue-400' : 'text-slate-400'}`}><SyncIcon /></button>
                     </header>
 
@@ -273,12 +294,17 @@
                                 <section className="space-y-2">
                                     {filteredStats.data.slice().reverse().map((sale, i) => (
                                         <div key={i} className="glass-card p-4 flex justify-between items-center animate-up">
-                                            <div>
-                                                <div className="text-[11px] font-black uppercase">{sale.customer}</div>
+                                            <div className="flex-1 min-w-0 pr-3">
+                                                <div className="text-[11px] font-black uppercase truncate">{sale.customer}</div>
                                                 <div className="text-[9px] text-slate-400 font-bold">{new Date(sale.date).toLocaleString('vi-VN')}</div>
-                                                <div className="text-[9px] text-slate-400 italic mt-0.5 truncate max-w-[180px]">{sale.details}</div>
+                                                <div className="text-[9px] text-slate-400 italic mt-0.5 truncate">{sale.details}</div>
                                             </div>
-                                            <div className="text-sm font-black text-blue-600">{(Number(sale.total)).toLocaleString()}</div>
+                                            <div className="flex flex-col items-end gap-2">
+                                                <div className="text-sm font-black text-blue-600">{(Number(sale.total)).toLocaleString()}đ</div>
+                                                <button onClick={() => handleViewHistory(sale)} className="flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-600 rounded-lg text-[9px] font-black uppercase tracking-tighter btn-press">
+                                                    <EyeIcon /> Xem
+                                                </button>
+                                            </div>
                                         </div>
                                     ))}
                                 </section>
@@ -314,10 +340,7 @@
                         </div>
                     )}
 
-                    {/* Modals... (Add Customer, Add Product, Selecting Item, Show Bill) */}
-                    {/* [Các Modal được giữ nguyên như code cũ của bạn] */}
-                    
-                    {/* ... (Copy các modal từ file gốc của bạn vào đây nếu cần chạy đầy đủ) ... */}
+                    {/* Modals */}
                     {showAddCust && (
                         <div className="fixed inset-0 z-[150] bg-black/60 backdrop-blur-sm flex items-center p-6 animate-up">
                             <div className="bg-white w-full rounded-3xl p-6 space-y-4 shadow-2xl">
@@ -372,6 +395,7 @@
                         </div>
                     )}
 
+                    {/* Modal HIỂN THỊ HÓA ĐƠN */}
                     {showBill && (
                         <div className="fixed inset-0 z-[200] bg-slate-900 flex flex-col items-center justify-center p-6">
                             {!billImg ? (
@@ -391,21 +415,30 @@
                     {/* VÙNG CHỨA HÓA ĐƠN ẨN ĐỂ CHỤP ẢNH */}
                     <div className="fixed -left-[9999px] top-0">
                         <div ref={receiptRef} className="w-[800px] bg-white text-black font-sans p-20">
-                            {/* [Phần Receipt Layout giữ nguyên như file cũ] */}
                             <div className="text-center mb-16">
-                                <h1 className="text-6xl font-black uppercase tracking-[0.2em] text-blue-600 mb-2">ĐƠN HÀNG</h1>
+                                <h1 className="text-6xl font-black uppercase tracking-[0.2em] text-blue-600 mb-2">
+                                    {previewData ? "HÓA ĐƠN CŨ" : "ĐƠN HÀNG"}
+                                </h1>
                                 <div className="flex items-center justify-center gap-4">
                                     <div className="h-1 w-24 bg-blue-200"></div>
                                     <span className="text-lg font-black uppercase tracking-[0.4em] text-blue-300">NGỌC LAN</span>
                                     <div className="h-1 w-24 bg-blue-200"></div>
                                 </div>
-                                <p className="text-sm font-bold opacity-30 mt-8 tracking-widest italic">Ngày tạo: {new Date().toLocaleString('vi-VN')}</p>
+                                <p className="text-sm font-bold opacity-30 mt-8 tracking-widest italic">
+                                    Ngày: {previewData ? previewData.date : new Date().toLocaleString('vi-VN')}
+                                </p>
                             </div>
                             
                             <div className="mb-14 bg-blue-50 p-10 rounded-[3rem] border-l-[16px] border-blue-500 shadow-sm">
                                 <div className="text-sm font-black uppercase text-blue-400 mb-2 tracking-widest">Khách hàng:</div>
-                                <div className="text-5xl font-black uppercase text-blue-900">{customer}</div>
-                                {orderNote && <div className="text-xl font-bold text-blue-700 mt-4 italic">📌 {orderNote}</div>}
+                                <div className="text-5xl font-black uppercase text-blue-900">
+                                    {previewData ? previewData.customer : customer}
+                                </div>
+                                {(previewData ? previewData.note : orderNote) && (
+                                    <div className="text-xl font-bold text-blue-700 mt-4 italic">
+                                        📌 {previewData ? previewData.note : orderNote}
+                                    </div>
+                                )}
                             </div>
 
                             <div className="mb-16 px-4">
@@ -414,26 +447,30 @@
                                     <div className="w-32 text-center">SL</div>
                                     <div className="w-40 text-right">Thành tiền</div>
                                 </div>
-                                {cart.map(item => (
+                                {(previewData ? previewData.items : cart).map(item => (
                                     <div key={item.id} className="flex py-10 border-b-2 border-dashed border-blue-100 items-center">
                                         <div className="flex-1">
                                             <div className="text-3xl font-black uppercase text-blue-900 leading-tight mb-2">{item.name}</div>
-                                            <div className="flex items-center gap-4">
-                                                <span className={`${item.discountPercent > 0 ? 'line-through text-gray-400 text-xl' : 'text-blue-500 font-bold text-2xl'}`}>
-                                                    {Number(item.originalPrice).toLocaleString()}đ
-                                                </span>
-                                                {item.discountPercent > 0 && (
-                                                    <span className="text-blue-600 font-black text-2xl">
-                                                        {Number(item.appliedPrice).toLocaleString()}đ (-{item.discountPercent}%)
+                                            {!previewData && (
+                                                <div className="flex items-center gap-4">
+                                                    <span className={`${item.discountPercent > 0 ? 'line-through text-gray-400 text-xl' : 'text-blue-500 font-bold text-2xl'}`}>
+                                                        {Number(item.originalPrice).toLocaleString()}đ
                                                     </span>
-                                                )}
-                                            </div>
+                                                    {item.discountPercent > 0 && (
+                                                        <span className="text-blue-600 font-black text-2xl">
+                                                            {Number(item.appliedPrice).toLocaleString()}đ (-{item.discountPercent}%)
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            )}
                                             {item.note && <div className="text-sm font-bold text-blue-400 italic mt-3 bg-blue-50/50 inline-block px-3 py-1 rounded-lg">* {item.note}</div>}
                                         </div>
                                         <div className="w-32 flex justify-center">
                                             <div className="w-20 h-20 rounded-full border-4 border-blue-500 flex items-center justify-center text-4xl font-black text-blue-600 italic bg-white shadow-md">{item.qty}</div>
                                         </div>
-                                        <div className="w-40 text-right text-3xl font-black text-blue-900">{(item.qty * item.appliedPrice).toLocaleString()}</div>
+                                        <div className="w-40 text-right text-3xl font-black text-blue-900">
+                                            {previewData ? "---" : (item.qty * item.appliedPrice).toLocaleString()}
+                                        </div>
                                     </div>
                                 ))}
                             </div>
@@ -441,7 +478,9 @@
                             <div className="bg-blue-600 text-white p-14 rounded-[4rem] flex justify-between items-center shadow-2xl mt-10">
                                 <div>
                                     <div className="text-sm font-black uppercase tracking-[0.3em] opacity-70 mb-2">Tổng cộng thanh toán:</div>
-                                    <div className="text-8xl font-black italic tracking-tighter leading-none">{totalAmount.toLocaleString()}</div>
+                                    <div className="text-8xl font-black italic tracking-tighter leading-none">
+                                        {Number(previewData ? previewData.total : totalAmount).toLocaleString()}
+                                    </div>
                                 </div>
                                 <div className="text-right">
                                     <div className="text-3xl font-black italic opacity-60">VNĐ</div>
