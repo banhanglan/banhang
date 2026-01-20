@@ -322,9 +322,9 @@
 
                     {/* Footer Nav */}
                     <nav className="fixed bottom-0 inset-x-0 bg-white/90 backdrop-blur-md border-t border-slate-100 px-6 py-4 pb-8 flex justify-around items-center z-50 rounded-t-[2.5rem]">
-                        <button onClick={() => setView('pos')} className={`flex flex-col items-center gap-1 ${view === 'pos' ? 'active-tab' : 'text-slate-300'}`}><HomeIcon /> <span className="text-[9px] font-black uppercase tracking-tighter">Bán hàng</span></button>
-                        <button onClick={() => setView('report')} className={`flex flex-col items-center gap-1 ${view === 'report' ? 'active-tab' : 'text-slate-300'}`}><ChartIcon /> <span className="text-[9px] font-black uppercase tracking-tighter">Báo cáo</span></button>
-                        <button onClick={() => setView('settings')} className={`flex flex-col items-center gap-1 ${view === 'settings' ? 'active-tab' : 'text-slate-300'}`}><div className={`w-5 h-5 rounded-full border-2 ${view === 'settings' ? 'border-blue-500 bg-blue-100' : 'border-current'}`}></div> <span className="text-[9px] font-black uppercase tracking-tighter">Cài đặt</span></button>
+                        <button onClick={() => setView('pos')} className={`flex flex-col items-center gap-1 ${view === 'pos' ? 'active-tab' : 'text-slate-600'}`}><HomeIcon /> <span className="text-[9px] font-black uppercase tracking-tighter">Bán hàng</span></button>
+                        <button onClick={() => setView('report')} className={`flex flex-col items-center gap-1 ${view === 'report' ? 'active-tab' : 'text-slate-600'}`}><ChartIcon /> <span className="text-[9px] font-black uppercase tracking-tighter">Báo cáo</span></button>
+                        <button onClick={() => setView('settings')} className={`flex flex-col items-center gap-1 ${view === 'settings' ? 'active-tab' : 'text-slate-600'}`}><div className={`w-5 h-5 rounded-full border-2 ${view === 'settings' ? 'border-blue-500 bg-blue-100' : 'border-current'}`}></div> <span className="text-[9px] font-black uppercase tracking-tighter">Cài đặt</span></button>
                     </nav>
 
                     {/* Floating Payment Button */}
